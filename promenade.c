@@ -405,10 +405,14 @@ static void dosession(TCMPOOL *mpool){
     rp = getenv("SERVER_NAME");
     p_hostname = rp ? rp : "";
   }
+  rp = getenv("SERVER_PORT");
+  const char *p_port = rp ? rp : "";
   rp = getenv("SSL_PROTOCOL_VERSION");
   const char *p_scheme = (rp && *rp != '\0') ? "https" : "http";
-  const char *p_scripturl = tcmpoolpushptr(mpool, tcsprintf("%s://%s%s",
-                                                            p_scheme, p_hostname, g_scriptname));
+  char *tmp_url = (*p_port == '\0') ? 
+    tcsprintf("%s://%s%s", p_scheme, p_hostname, g_scriptname) :
+    tcsprintf("%s://%s:%s%s", p_scheme, p_hostname, p_port, g_scriptname);
+  const char *p_scripturl = tcmpoolpushptr(mpool, tmp_url);
   rp = getenv("HTTP_REFERER");
   const char *p_referrer = rp ? rp : "";
   rp = getenv("HTTP_USER_AGENT");
