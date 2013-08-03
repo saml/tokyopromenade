@@ -5,3 +5,5 @@ Makefile
 *.cgi
 *.fcgi
 prommgr
+www/
+build/
