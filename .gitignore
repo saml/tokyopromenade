@@ -2,3 +2,6 @@
 *.status
 *.o
 Makefile
+*.cgi
+*.fcgi
+prommgr
